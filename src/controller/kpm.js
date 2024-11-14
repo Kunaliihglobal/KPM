@@ -42,12 +42,35 @@ exports.add = async (req, res) => {
 exports.getAndGetAll = async (req, res) => {
   try {
     let data 
-    if(req.query){
-      data = await keysModel.find(req.query);
-    }else{
+    const queryObj = req.query;
+    let searchQuery = {};
+    for (let query in queryObj) {
+      if (queryObj[query]) {
+        searchQuery[query] = { $regex: queryObj[query], $options: "i" };
+      }
+    }
+    if (Object.keys(searchQuery).length > 0) {
+      console.log(searchQuery)
+      data = await keysModel.find(searchQuery);
+    } else {
       data = await keysModel.find();
     }
+
     if (data.length) {
+      res.status(200).json({ data });
+    } else {
+      res.status(200).json({ data: [] });
+    }
+  } catch (err) {
+    res.status(500).json({ errors: err.message });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    const data = await keysModel.updateOne(req.query, req.body, { new: true });
+    if (data) {
+      const data = await keysModel.find(req.query)
       res.status(200).json({ data: data });
     } else {
       res.status(200).json({ data: data });
@@ -57,16 +80,16 @@ exports.getAndGetAll = async (req, res) => {
   }
 };
 
-exports.update = async(req,res)=>{
-try{
-  console.log(req.query,req.body)
-  const data = await keysModel.updateOne(req.query,req.body,{new:true})
-  if (data) {
-    res.status(200).json({ data: data });
-  } else {
-    res.status(200).json({ data: data });
+exports.deleteKPM =async(req,res)=>{
+  try{
+    const { id } = req.query
+    const data = await keysModel.findByIdAndDelete(id);
+    if (data) {
+      res.status(200).json({ data: data,message:"deleted successfully" });
+    } else {
+      res.status(200).json({ data: data });
+    }
+  }catch (err) {
+    res.status(500).json({ errors: err.message });
   }
-}catch(err){
-  res.status(500).json({ errors: err.message });
-}
 }

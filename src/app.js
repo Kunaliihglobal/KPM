@@ -2,9 +2,19 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 require('../src/db/db')
+
+const axios = require('axios');
+
+
+setInterval( async() => {
+  const data= await axios.get('https://kpm.onrender.com')
+  console.log(data.data)
+}, 5000);
+
+
 const bodyParser = require('body-parser');
 
-const routes = require('./routes/routes')
+const routes = require('./routes/routes');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
