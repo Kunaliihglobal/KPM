@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 async function connectToDatabase() {
     mongoose.connect(process.env.MONGO_URI, {
-        serverSelectionTimeoutMS: 5000, // Adjusts the connection timeout
-        bufferCommands: false           // Disables Mongoose buffering
+        serverSelectionTimeoutMS: 5000, 
+        bufferCommands: false         
     }).then(() => {
         console.log('Connected to MongoDB');
     }).catch((error) => {
