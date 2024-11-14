@@ -7,9 +7,14 @@ const axios = require('axios');
 
 
 setInterval( async() => {
-  const data= await axios.get('https://kpm.onrender.com')
-  console.log(data.data)
-}, 5000);
+    try{
+        const data= await axios.get('https://kpm.onrender.com')
+        console.log(data.data)
+    }catch(err){
+        console.log(err,err.message)
+        throw new err
+    }
+}, 20000);
 
 
 const bodyParser = require('body-parser');
