@@ -68,7 +68,8 @@ exports.getAndGetAll = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const data = await keysModel.updateOne(req.query, req.body, { new: true });
+    const {id} = req.query
+    const data = await keysModel.findByIdAndUpdate(id, req.body, { new: true });
     if (data) {
       const data = await keysModel.find(req.query)
       res.status(200).json({ data: data });
