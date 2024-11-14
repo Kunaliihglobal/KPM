@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 async function connectToDatabase() {
-    mongoose.connect(process.env.MONGO_URI, {
+   await mongoose.connect(process.env.MONGO_URI, {
         serverSelectionTimeoutMS: 5000, 
         bufferCommands: false         
     }).then(() => {
