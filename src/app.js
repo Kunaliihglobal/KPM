@@ -1,10 +1,10 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 require('dotenv').config()
 require('../src/db/db')
 
 const axios = require('axios');
-
 
 setInterval( async() => {
     try{
@@ -15,11 +15,12 @@ setInterval( async() => {
         throw new err
     }
 }, 20000);
-
+app.use(cors())
 
 const bodyParser = require('body-parser');
 
 const routes = require('./routes/routes');
+
 
 app.use(bodyParser.urlencoded({ extended: true }))
 

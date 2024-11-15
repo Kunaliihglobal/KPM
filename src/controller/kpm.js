@@ -1,4 +1,3 @@
-const fs = require("fs");
 const keysModel = require("../model/kpm_model");
 
 exports.add = async (req, res) => {
@@ -27,7 +26,7 @@ exports.add = async (req, res) => {
       Keys: Keys,
       url: url,
       document: document,
-      email: email,
+      email: email,   
     });
     if (data) {
       res.status(201).json({ message: "creads are created", data: data });
