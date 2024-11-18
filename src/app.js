@@ -15,7 +15,9 @@ setInterval( async() => {
         throw new err
     }
 }, 20000);
-app.use(cors())
+app.use(cors({
+    origin: '*',
+}));
 
 const bodyParser = require('body-parser');
 

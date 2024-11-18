@@ -93,3 +93,18 @@ exports.deleteKPM =async(req,res)=>{
     res.status(500).json({ errors: err.message });
   }
 }
+
+
+exports.getbyid = async(req,res)=>{
+  try{
+    const {id} = req.query
+    const data = await keysModel.findById(id)
+    if(data){
+      res.status(200).json({ data: data });
+    }else{
+      res.status(200).json({ data: data,message:"Not found" });
+    }
+  }catch(err){
+    res.status(500).json({ errors: err.message });
+  }
+}
